@@ -11,14 +11,14 @@ export const Container = styled.div<ContainerProps>`
   background: transparent;
   border: 1px solid #cdcdcd;
   border-radius: 5px;
-  padding: 12px;
+  padding: 15px;
   width: 100%;
   color: #afafaf;
   display: flex;
   align-items: center;
 
   & + div {
-    margin-top: 10px;
+    margin-top: 13px;
   }
 
   ${(props) =>
