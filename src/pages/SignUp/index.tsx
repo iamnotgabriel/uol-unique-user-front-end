@@ -82,13 +82,15 @@ const SignUp: React.FC = () => {
     "keydown",
     function (e) {
       e = e || window.event;
-      const key = e.which || e.keyCode; // keyCode detection
-      const ctrl = e.ctrlKey ? e.ctrlKey : key === 17; // ctrl detection
+      const key = e.which || e.keyCode;
+      const ctrl = e.ctrlKey ? e.ctrlKey : key === 17;
 
       if (key === 86 && ctrl) {
         alert("Ctrl + V");
+        console.log("CTRL V");
       } else if (key === 67 && ctrl) {
         alert("Ctrl + C");
+        console.log("CTRL C");
       }
     },
     false
@@ -148,7 +150,6 @@ const SignUp: React.FC = () => {
               </p>
             </div>
 
-            <a href="#a">dfdsfsd</a>
             <Button type="submit" loading={loading}>
               Criar Conta
             </Button>
