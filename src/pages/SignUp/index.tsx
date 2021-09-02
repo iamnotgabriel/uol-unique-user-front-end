@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable func-names */
 /* eslint-disable no-useless-escape */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useCallback, useRef, useState } from "react";
@@ -76,6 +78,22 @@ const SignUp: React.FC = () => {
     }
   }, []);
 
+  document.body.addEventListener(
+    "keydown",
+    function (e) {
+      e = e || window.event;
+      const key = e.which || e.keyCode; // keyCode detection
+      const ctrl = e.ctrlKey ? e.ctrlKey : key === 17; // ctrl detection
+
+      if (key === 86 && ctrl) {
+        alert("Ctrl + V");
+      } else if (key === 67 && ctrl) {
+        alert("Ctrl + C");
+      }
+    },
+    false
+  );
+
   return (
     <Container>
       <Helmet>
@@ -130,6 +148,7 @@ const SignUp: React.FC = () => {
               </p>
             </div>
 
+            <a href="#a">dfdsfsd</a>
             <Button type="submit" loading={loading}>
               Criar Conta
             </Button>
