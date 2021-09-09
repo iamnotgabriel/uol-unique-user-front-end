@@ -2,7 +2,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-useless-escape */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useEffect } from "react";
 
 import { Form } from "@unform/web";
 import { FormHandles } from "@unform/core";
@@ -14,6 +14,7 @@ import { BiUser, BiLock, BiEnvelope, BiPhone } from "react-icons/bi";
 import { Helmet } from "react-helmet";
 
 import { message } from "antd";
+import { GetResult } from "@fingerprintjs/fingerprintjs";
 import { Container, Background, Content, AnimationContainer } from "./styles";
 
 import Logo_Uol from "../../assets/Logo_Uol.png";
@@ -21,6 +22,7 @@ import Logo_Uol from "../../assets/Logo_Uol.png";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 import getValidationErrors from "../../utils/getValidationErrors";
+import { fpPromise } from "../..";
 
 interface SignUpFormData {
   email: string;
@@ -34,6 +36,7 @@ const SignUp: React.FC = () => {
   const [phone, setPhone] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [deviceId, setDeviceId] = useState<GetResult>();
 
   const maskPhone = (value: any) => {
     return value
@@ -95,6 +98,12 @@ const SignUp: React.FC = () => {
     },
     false
   );
+
+  useEffect(() => {
+    fpPromise
+      .then((fp) => fp.get())
+      .then((getResult) => setDeviceId(getResult));
+  });
 
   return (
     <Container>
