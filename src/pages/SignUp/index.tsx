@@ -31,6 +31,10 @@ interface SignUpFormData {
   password: string;
   name: string;
   phone: string;
+  startTime: number;
+  endTime: number;
+  pasteCount: number;
+  deviceId: string;
 }
 
 const SignUp: React.FC = () => {
@@ -39,6 +43,8 @@ const SignUp: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [deviceId, setDeviceId] = useState<GetResult>();
+  const [pasteCount, setPasteCount] = useState(0);
+  const [startTime, setStartTime] = useState<number>(Date.now());
 
   const history = useHistory();
 
@@ -65,12 +71,15 @@ const SignUp: React.FC = () => {
           name: Yup.string().required("Nome obrigatório"),
           phone: Yup.string().required("Telefone obrigatório"),
         });
-
+        data.endTime = Date.now();
+        data.startTime = startTime;
+        data.pasteCount = pasteCount;
+        data.deviceId = deviceId?.visitorId as string;
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await api.post("/users", data);
+        await api.post("/users", data).catch(() => console.log(data));
 
         history.push("/dashboard");
 
@@ -92,29 +101,23 @@ const SignUp: React.FC = () => {
     [history]
   );
 
-  document.body.addEventListener(
-    "keydown",
-    function (e) {
-      e = e || window.event;
-      const key = e.which || e.keyCode;
-      const ctrl = e.ctrlKey ? e.ctrlKey : key === 17;
-
-      if (key === 86 && ctrl) {
-        alert("Ctrl + V");
-        console.log("CTRL V");
-      } else if (key === 67 && ctrl) {
-        alert("Ctrl + C");
-        console.log("CTRL C");
-      }
-    },
-    false
-  );
-
   useEffect(() => {
     fpPromise
       .then((fp: any) => fp.get())
       .then((getResult: any) => setDeviceId(getResult));
-  });
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("focus", () => {
+      setStartTime(Date.now());
+    });
+  }, []);
+
+  useEffect(() => {
+    document.body.addEventListener("paste", function () {
+      setPasteCount(pasteCount + 1);
+    });
+  }, [pasteCount]);
 
   return (
     <Container>
