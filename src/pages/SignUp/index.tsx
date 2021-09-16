@@ -75,6 +75,7 @@ const SignUp: React.FC = () => {
         data.startTime = startTime;
         data.pasteCount = pasteCount;
         data.deviceId = deviceId?.visitorId as string;
+        console.log("hello", deviceId);
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -98,7 +99,7 @@ const SignUp: React.FC = () => {
         setLoading(false);
       }
     },
-    [history]
+    [history, deviceId, pasteCount, startTime]
   );
 
   useEffect(() => {
