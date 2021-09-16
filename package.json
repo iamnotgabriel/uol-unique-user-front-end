@@ -21,6 +21,8 @@
     "antd-mask-input": "^0.1.15",
     "axios": "^0.21.4",
     "date-fns": "^2.22.1",
+    "detect-browser": "^5.2.0",
+    "get-browser-fingerprint": "^2.0.1",
     "history": "^5.0.0",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",

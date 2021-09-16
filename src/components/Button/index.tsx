@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, { ButtonHTMLAttributes } from "react";
 
 import { Container } from "./styles";
@@ -15,3 +17,5 @@ const Button: React.FC<ButtonProps> = ({ children, loading, ...rest }) => {
 };
 
 export default Button;
+
+/* eslint-disable react/prop-types */
