@@ -16,6 +16,7 @@ import { Helmet } from "react-helmet";
 import { message } from "antd";
 import { GetResult } from "@fingerprintjs/fingerprintjs";
 import { useHistory } from "react-router-dom";
+import { detect } from "detect-browser";
 import { Container, Background, Content, AnimationContainer } from "./styles";
 
 import Logo_Uol from "../../assets/Logo_Uol.png";
@@ -35,6 +36,12 @@ interface SignUpFormData {
   endTime: number;
   pasteCount: number;
   deviceId: string;
+  timezone: string;
+  screenHeight: number;
+  screenWidth: number;
+  os: string;
+  browser: string;
+  ip: string;
 }
 
 const SignUp: React.FC = () => {
@@ -45,6 +52,9 @@ const SignUp: React.FC = () => {
   const [deviceId, setDeviceId] = useState<GetResult>();
   const [pasteCount, setPasteCount] = useState(0);
   const [startTime, setStartTime] = useState<number>(Date.now());
+  const [browser, setBrowser] = useState("");
+  const [os, setOs] = useState("");
+  const [ipv4, setIpv4] = useState("");
 
   const history = useHistory();
 
@@ -75,7 +85,12 @@ const SignUp: React.FC = () => {
         data.startTime = startTime;
         data.pasteCount = pasteCount;
         data.deviceId = deviceId?.visitorId as string;
-        console.log("hello", deviceId);
+        data.timezone = deviceId?.components.timezone.value as string;
+        data.screenHeight = window.screen.height;
+        data.screenWidth = window.screen.width;
+        data.os = os;
+        data.browser = browser;
+        data.ip = ipv4;
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -99,7 +114,7 @@ const SignUp: React.FC = () => {
         setLoading(false);
       }
     },
-    [history, deviceId, pasteCount, startTime]
+    [history, deviceId, pasteCount, startTime, browser, os, ipv4]
   );
 
   useEffect(() => {
@@ -119,6 +134,20 @@ const SignUp: React.FC = () => {
       setPasteCount(pasteCount + 1);
     });
   }, [pasteCount]);
+
+  useEffect(() => {
+    const b = detect();
+    setBrowser(b!.name);
+    setOs(b!.os!);
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "https://geolocation-db.com/json/0f761a30-fe14-11e9-b59f-e53803842572"
+    )
+      .then((response) => response.json())
+      .then((data) => setIpv4(data.IPv4));
+  }, []);
 
   return (
     <Container>

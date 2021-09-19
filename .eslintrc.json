@@ -31,7 +31,12 @@
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "no-use-before-define": "off",
     "no-param-reassign": "off",
     "camelcase": "off",
@@ -40,6 +45,7 @@
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
+    "react/require-default-props":"off",
     "no-unused-expressions": "off",
     "no-console": "off",
     "@typescript-eslint/ban-types": "off",
