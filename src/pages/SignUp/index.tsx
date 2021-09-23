@@ -17,6 +17,7 @@ import { message } from "antd";
 import { GetResult } from "@fingerprintjs/fingerprintjs";
 import { useHistory } from "react-router-dom";
 import { detect } from "detect-browser";
+import { getGPUTier } from "detect-gpu";
 import { Container, Background, Content, AnimationContainer } from "./styles";
 
 import Logo_Uol from "../../assets/Logo_Uol.png";
@@ -42,6 +43,8 @@ interface SignUpFormData {
   os: string;
   browser: string;
   ip: string;
+  cpuCores: number;
+  gpuName?: string;
 }
 
 const SignUp: React.FC = () => {
@@ -81,6 +84,8 @@ const SignUp: React.FC = () => {
           name: Yup.string().required("Nome obrigatório"),
           phone: Yup.string().required("Telefone obrigatório"),
         });
+        const gpuTier = await getGPUTier();
+
         data.endTime = Date.now();
         data.startTime = startTime;
         data.pasteCount = pasteCount;
@@ -91,6 +96,8 @@ const SignUp: React.FC = () => {
         data.os = os;
         data.browser = browser;
         data.ip = ipv4;
+        data.gpuName = gpuTier.gpu;
+        data.cpuCores = navigator.hardwareConcurrency;
         await schema.validate(data, {
           abortEarly: false,
         });
