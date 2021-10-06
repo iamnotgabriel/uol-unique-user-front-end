@@ -9,9 +9,24 @@ export const ContTable = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 80%;
 
   h2 {
     margin: 10px 0 15px 0;
   }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  /* .devices,
+  .pc {
+    margin-right: 50px;
+  } */
 `;
