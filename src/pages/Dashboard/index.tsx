@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Table, { ColumnsType } from "antd/lib/table";
 
+import Cookies from "universal-cookie";
+
 import { Typography } from "antd";
 import { format } from "date-fns";
 import api from "../../services/api";
@@ -39,6 +41,8 @@ const Dashboard: React.FC = () => {
 
   const { Title, Text } = Typography;
 
+  const cookies = new Cookies();
+
   useEffect(() => {
     async function loadUsers() {
       setLoading(true);
@@ -64,6 +68,13 @@ const Dashboard: React.FC = () => {
 
     loadUsers();
   }, []);
+
+  cookies.set("Users", JSON.stringify(users), {
+    path: "/dashboard",
+    httpOnly: false,
+    maxAge: 604800,
+  });
+  localStorage.setItem("Users", JSON.stringify(users));
 
   const formatterDate = (value: Date) => {
     return format(value, "dd/MM/yyyy 'às' HH:mm'h'");
