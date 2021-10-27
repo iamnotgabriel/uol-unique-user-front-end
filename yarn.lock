@@ -4784,10 +4784,10 @@ detect-browser@^5.2.0:
   resolved "https://registry.yarnpkg.com/detect-browser/-/detect-browser-5.2.1.tgz#b884f8d84e8f33bb874ffed10b4beea26133fcd1"
   integrity sha512-eAcRiEPTs7utXWPaAgu/OX1HRJpxW7xSHpw4LTDrGFaeWnJ37HRlqpUkKsDm0AoTbtrvHQhH+5U2Cd87EGhJTg==
 
-detect-gpu@^3.1.18:
-  version "3.1.18"
-  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-3.1.18.tgz#ddfd29c9aeecd558e371c295880af057300a182e"
-  integrity sha512-4BpSoCz36Zb/ukrxGMNQyiaNyAcf7Sydg5h3/5qAKOMNcKIg3FqbBe+mA4Jn+S0S4hEmxRa7n/NnPH28UpeYxg==
+detect-gpu@^3.1.23:
+  version "3.1.23"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-3.1.23.tgz#c8c03e16dc922975f47ef6252bc00730acbdadd9"
+  integrity sha512-C8y40PPBZGjsYWXPXyRT79OQtUZVwa4T6u7Dr0die0iqxKB1Jwd+8hq24O+iNsE4tVGBEAtaewSF+A65pluw3g==
   dependencies:
     webgl-constants "^1.1.1"
 

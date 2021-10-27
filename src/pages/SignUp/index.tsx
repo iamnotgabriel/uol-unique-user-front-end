@@ -18,6 +18,12 @@ import { GetResult } from "@fingerprintjs/fingerprintjs";
 import { useHistory } from "react-router-dom";
 import { detect } from "detect-browser";
 import { getGPUTier } from "detect-gpu";
+import {
+  format,
+  differenceInMilliseconds,
+  differenceInSeconds,
+} from "date-fns";
+import { differenceInMinutes } from "date-fns/esm";
 import { Container, Background, Content, AnimationContainer } from "./styles";
 
 import Logo_Uol from "../../assets/Logo_Uol.png";
@@ -58,6 +64,11 @@ const SignUp: React.FC = () => {
   const [browser, setBrowser] = useState("");
   const [os, setOs] = useState("");
   const [ipv4, setIpv4] = useState("");
+
+  const [initialDate, setInitialDate] = useState<any>();
+  const [endDate, setEndDate] = useState<any>();
+
+  const [isPress, setIsPress] = useState<boolean>();
 
   const history = useHistory();
 
@@ -156,6 +167,21 @@ const SignUp: React.FC = () => {
       .then((data) => setIpv4(data.IPv4));
   }, []);
 
+  const formatterDate = (value: Date) => {
+    return format(value, "HH:mm:ss");
+  };
+
+  function onKeyUp(e: any) {
+    setInitialDate(new Date());
+  }
+
+  function onKeyDown(e: any) {
+    setEndDate(new Date());
+    setIsPress(true);
+  }
+
+  const differenceBetweenHours = differenceInSeconds(initialDate, endDate);
+
   return (
     <Container>
       <Helmet>
@@ -201,6 +227,17 @@ const SignUp: React.FC = () => {
               icon={BiPhone}
               onChange={(e) => setPhone(maskPhone(e.target.value))}
             />
+
+            <Input
+              type="text"
+              placeholder="Digite a frase ---> Testando."
+              name="text"
+              onFocus={onKeyUp}
+              onBlur={onKeyDown}
+              icon={BiUser}
+            />
+
+            {isPress ? <p>Tempo {differenceBetweenHours} segundos</p> : ""}
 
             <div className="privacy">
               <p>
