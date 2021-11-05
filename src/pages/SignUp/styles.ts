@@ -61,7 +61,7 @@ export const AnimationContainer = styled.div`
 
   .line {
     background: var(--secondary-color);
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     width: 60px;
     height: 4px;
   }
@@ -90,7 +90,7 @@ export const AnimationContainer = styled.div`
     background: var(--primary-color);
     font-weight: bold;
     color: #fff;
-    margin-top: 50px;
+    margin-top: 20px;
 
     transition: 0.3s ease-in;
 
