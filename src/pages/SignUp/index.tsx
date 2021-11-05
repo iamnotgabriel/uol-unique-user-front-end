@@ -28,6 +28,7 @@ import {
   isWithinInterval,
   areIntervalsOverlapping,
   getSeconds,
+  isSameSecond,
 } from "date-fns";
 import { differenceInMinutes } from "date-fns/esm";
 import { Container, Background, Content, AnimationContainer } from "./styles";
@@ -190,11 +191,14 @@ const SignUp: React.FC = () => {
   const secondsKeyDown = getSeconds(endDate);
 
   const differenceInBetweenTimes = differenceInSeconds(
-    secondsKeyUp,
-    secondsKeyDown
+    secondsKeyDown,
+    secondsKeyUp
   );
 
+  const sameSeconds = isSameSecond(secondsKeyUp, secondsKeyDown);
+
   console.log(differenceInBetweenTimes);
+  console.log(sameSeconds);
 
   return (
     <Container>
@@ -251,16 +255,9 @@ const SignUp: React.FC = () => {
               icon={BiUser}
             />
 
-            {/* {isPress ? <p>Tempo KEYUP - {initialDate} segundos</p> : ""}
-            {isPress ? <p>Tempo KEYDOWN - {endDate} segundos</p> : ""} */}
-
-            <div className="privacy">
-              <p>
-                Ao continuar, declaro que estou ciente e aceito os{" "}
-                <b>termos de uso </b>
-                do produto e a <b>política de privacidade</b>.
-              </p>
-            </div>
+            {sameSeconds ? "Os tempos fornecidos estão no mesmo segundo" : ""}
+            <p>KeyUP: {secondsKeyUp}</p>
+            <p>KeyDOWN: {secondsKeyDown}</p>
 
             <Button type="submit" loading={loading}>
               Criar Conta
