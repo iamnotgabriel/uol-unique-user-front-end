@@ -22,6 +22,12 @@ import {
   format,
   differenceInMilliseconds,
   differenceInSeconds,
+  formatDistance,
+  clamp,
+  eachHourOfInterval,
+  isWithinInterval,
+  areIntervalsOverlapping,
+  getSeconds,
 } from "date-fns";
 import { differenceInMinutes } from "date-fns/esm";
 import { Container, Background, Content, AnimationContainer } from "./styles";
@@ -180,7 +186,15 @@ const SignUp: React.FC = () => {
     setIsPress(true);
   }
 
-  const differenceBetweenHours = differenceInSeconds(initialDate, endDate);
+  const secondsKeyUp = getSeconds(initialDate);
+  const secondsKeyDown = getSeconds(endDate);
+
+  const differenceInBetweenTimes = differenceInSeconds(
+    secondsKeyUp,
+    secondsKeyDown
+  );
+
+  console.log(differenceInBetweenTimes);
 
   return (
     <Container>
@@ -232,12 +246,13 @@ const SignUp: React.FC = () => {
               type="text"
               placeholder="Digite a frase ---> Testando."
               name="text"
-              onFocus={onKeyUp}
-              onBlur={onKeyDown}
+              onKeyUp={onKeyUp}
+              onKeyDown={onKeyDown}
               icon={BiUser}
             />
 
-            {isPress ? <p>Tempo {differenceBetweenHours} segundos</p> : ""}
+            {/* {isPress ? <p>Tempo KEYUP - {initialDate} segundos</p> : ""}
+            {isPress ? <p>Tempo KEYDOWN - {endDate} segundos</p> : ""} */}
 
             <div className="privacy">
               <p>
