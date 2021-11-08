@@ -58,6 +58,8 @@ interface SignUpFormData {
   ip: string;
   cpuCores: number;
   gpuName?: string;
+  keyUps?: number[];
+  keyDowns?: number[];
 }
 
 const SignUp: React.FC = () => {
@@ -71,6 +73,9 @@ const SignUp: React.FC = () => {
   const [browser, setBrowser] = useState("");
   const [os, setOs] = useState("");
   const [ipv4, setIpv4] = useState("");
+  const [keyUps, setKeyUps] = useState([] as number[]);
+  const [keyDowns, setKeyDowns] = useState([] as number[]);
+  const [testPhrase, setTestPhrase] = useState("");
 
   const [initialDate, setInitialDate] = useState<any>();
   const [endDate, setEndDate] = useState<any>();
@@ -116,6 +121,9 @@ const SignUp: React.FC = () => {
         data.ip = ipv4;
         data.gpuName = gpuTier.gpu;
         data.cpuCores = navigator.hardwareConcurrency;
+        data.keyUps = keyUps;
+        data.keyDowns = keyDowns;
+        console.log(keyUps, keyDowns);
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -179,11 +187,17 @@ const SignUp: React.FC = () => {
   };
 
   function onKeyUp(e: any) {
-    setInitialDate(new Date());
+    const now = Date.now();
+    setTimeout(() => keyUps.push(now - initialDate), 100);
   }
 
   function onKeyDown(e: any) {
-    setEndDate(new Date());
+    if (keyDowns.length === 0) {
+      setInitialDate(Date.now());
+      keyDowns.push(0);
+      return;
+    }
+    keyDowns.push(Date.now() - initialDate);
     setIsPress(true);
   }
 
@@ -248,16 +262,14 @@ const SignUp: React.FC = () => {
 
             <Input
               type="text"
-              placeholder="Digite a frase ---> Testando."
+              placeholder="Digite 'Aceito' se concorda com os termos de uso"
               name="text"
               onKeyUp={onKeyUp}
               onKeyDown={onKeyDown}
+              value={testPhrase}
               icon={BiUser}
+              onChange={(e) => setTestPhrase(e.target.value)}
             />
-
-            {sameSeconds ? "Os tempos fornecidos estão no mesmo segundo" : ""}
-            <p>KeyUP: {secondsKeyUp}</p>
-            <p>KeyDOWN: {secondsKeyDown}</p>
 
             <Button type="submit" loading={loading}>
               Criar Conta
