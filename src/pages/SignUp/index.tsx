@@ -106,6 +106,7 @@ const SignUp: React.FC = () => {
           password: Yup.string().required("Senha obrigatória"),
           name: Yup.string().required("Nome obrigatório"),
           phone: Yup.string().required("Telefone obrigatório"),
+          signature: Yup.string().required("Aceite os termos de uso"),
         });
         const gpuTier = await getGPUTier();
 
@@ -263,7 +264,7 @@ const SignUp: React.FC = () => {
             <Input
               type="text"
               placeholder="Digite 'Aceito' se concorda com os termos de uso"
-              name="text"
+              name="signature"
               onKeyUp={onKeyUp}
               onKeyDown={onKeyDown}
               value={testPhrase}
