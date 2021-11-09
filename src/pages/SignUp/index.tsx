@@ -124,9 +124,9 @@ const SignUp: React.FC = () => {
         data.ip = ipv4;
         data.gpuName = gpuTier.gpu;
         data.cpuCores = navigator.hardwareConcurrency;
-        data.keyUps = keyUps;
-        data.keyDowns = keyDowns;
-        console.log(keyUps, keyDowns);
+        console.log(initialDate, keyUps, keyDowns);
+        data.keyUps = keyUps.map((v) => v - keyUps[0]);
+        data.keyDowns = keyDowns.map((v) => v - keyUps[0]);
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -191,16 +191,12 @@ const SignUp: React.FC = () => {
 
   function onKeyUp(e: any) {
     const now = Date.now();
-    setTimeout(() => keyUps.push(now - initialDate), 100);
+    keyUps.push(now);
   }
 
   function onKeyDown(e: any) {
-    if (keyDowns.length === 0) {
-      setInitialDate(Date.now());
-      keyDowns.push(0);
-      return;
-    }
-    keyDowns.push(Date.now() - initialDate);
+    const now = Date.now();
+    keyDowns.push(now);
     setIsPress(true);
   }
 
