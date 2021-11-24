@@ -260,6 +260,7 @@ const SignUp: React.FC = () => {
             />
 
             <Input
+              id="signature"
               type="text"
               placeholder="Digite 'aceito' se concorda com os termos de uso"
               name="signature"
@@ -268,6 +269,8 @@ const SignUp: React.FC = () => {
               value={testPhrase}
               icon={BiUser}
               onChange={(e) => setTestPhrase(e.target.value)}
+              autoComplete="off"
+              disablePaste
             />
             <Button type="submit" loading={loading}>
               Criar Conta
