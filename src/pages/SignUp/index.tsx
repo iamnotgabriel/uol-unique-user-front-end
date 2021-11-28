@@ -192,6 +192,11 @@ const SignUp: React.FC = () => {
   function onKeyUp(e: any) {
     const now = Date.now();
     keyUps.push(now);
+    if (e.keyCode === 8) {
+      setKeyUps([]);
+      setKeyDowns([]);
+      setTestPhrase("");
+    }
   }
 
   function onKeyDown(e: any) {
@@ -268,6 +273,9 @@ const SignUp: React.FC = () => {
               value={testPhrase}
               icon={BiUser}
               onChange={(e) => setTestPhrase(e.target.value)}
+              autoComplete="off"
+              onDrop={(e) => e.preventDefault()}
+              disablePaste
             />
             <Button type="submit" loading={loading}>
               Criar Conta
