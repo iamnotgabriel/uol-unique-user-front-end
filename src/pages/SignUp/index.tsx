@@ -265,6 +265,7 @@ const SignUp: React.FC = () => {
             />
 
             <Input
+              id="signature"
               type="text"
               placeholder="Digite 'aceito' se concorda com os termos de uso"
               name="signature"

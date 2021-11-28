@@ -17,17 +17,18 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   isPassword?: boolean;
   icon?: React.ComponentType<IconBaseProps>;
+  disablePaste?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
   name,
   isPassword,
   icon: Icon,
+  disablePaste,
   ...rest
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { fieldName, defaultValue, error, registerField } = useField(name);
-
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -40,6 +41,13 @@ const Input: React.FC<InputProps> = ({
       path: "value",
     });
   }, [fieldName, registerField]);
+
+  useEffect(() => {
+    if (disablePaste) {
+      const input = document.querySelector(`#${rest.id}`);
+      input?.addEventListener("paste", (e) => e.preventDefault());
+    }
+  });
 
   const handleShowPassword = useCallback(() => {
     setShowPassword(true);
