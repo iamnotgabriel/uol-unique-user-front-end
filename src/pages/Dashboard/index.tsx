@@ -86,6 +86,10 @@ const Dashboard: React.FC = () => {
       dataIndex: "id",
     },
     {
+      title: "Id único",
+      dataIndex: "hashid",
+    },
+    {
       title: "Nome",
       dataIndex: "name",
     },
