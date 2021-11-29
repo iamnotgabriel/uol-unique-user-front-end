@@ -124,7 +124,6 @@ const SignUp: React.FC = () => {
         data.ip = ipv4;
         data.gpuName = gpuTier.gpu;
         data.cpuCores = navigator.hardwareConcurrency;
-        console.log(initialDate, keyUps, keyDowns);
         data.keyUps = keyUps.map((v) => v - keyUps[0]);
         data.keyDowns = keyDowns.map((v) => v - keyUps[0]);
         await schema.validate(data, {
@@ -138,7 +137,6 @@ const SignUp: React.FC = () => {
         reset();
         setPhone("");
         message.success("Cadastro realizado com sucesso!");
-        console.log(data);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -150,7 +148,18 @@ const SignUp: React.FC = () => {
         setLoading(false);
       }
     },
-    [history, deviceId, pasteCount, startTime, browser, os, ipv4]
+    [
+      startTime,
+      pasteCount,
+      deviceId?.visitorId,
+      deviceId?.components.timezone.value,
+      os,
+      browser,
+      ipv4,
+      keyUps,
+      keyDowns,
+      history,
+    ]
   );
 
   useEffect(() => {
@@ -214,9 +223,6 @@ const SignUp: React.FC = () => {
   );
 
   const sameSeconds = isSameSecond(secondsKeyUp, secondsKeyDown);
-
-  console.log(differenceInBetweenTimes);
-  console.log(sameSeconds);
 
   return (
     <Container>
